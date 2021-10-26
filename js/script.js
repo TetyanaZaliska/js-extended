@@ -1,48 +1,43 @@
 'use strict';
 
-const btns = document.querySelectorAll("button"),
-      wrapper = document.querySelector(".btn-block");
+document.addEventListener('DOMContentLoaded', () => {
 
-// console.log(btns[0].classList.length);
-// console.log(btns[0].classList.item(1));
-// console.log(btns[1].classList.add('red', 'addmoreclass'));
-// console.log(btns[0].classList.remove('blue'));
-// console.log(btns[0].classList.toggle('blue'));
+    const tabs = document.querySelectorAll('.tabheader__item'),
+          tabContent = document.querySelectorAll('.tabcontent'),
+          tabsParent = document.querySelector('.tabheader__items');
 
+    function hideAllTabContent() {
+        tabContent.forEach(item => {
+            item.classList.remove('show', 'fade');
+            item.classList.add('hide');
+        });
 
-// if (btns[1].classList.contains('red')) {
-//     console.log('red');
-// }
-
-btns[0].addEventListener('click', (event) => {
-    if (!btns[1].classList.contains('red')) {
-        btns[1].classList.add('red');
-    } else {
-        btns[1].classList.remove('red');
+        tabs.forEach(item => {
+            item.classList.remove('tabheader__item_active');
+        });
     }
-    // btns[1].classList.toggle('red');
-});
 
-// deprecated
-// console.log(btns[0].className);
+    function showActiveTab(i = 0) {
+        tabContent[i].classList.remove('hide');
+        tabContent[i].classList.add('show', 'fade');
 
-
-// делегирование
-wrapper.addEventListener('click', (event) => {
-    // if (event.target && event.target.tagName == "BUTTON" && event.target.classList.contains('red')) {
-    //     console.log('Hello');
-    // }
-    if (event.target && event.target.matches('button.red')) {
-        console.log('Hello');
+        tabs[i].classList.add('tabheader__item_active');
     }
+
+    hideAllTabContent();
+    showActiveTab();
+
+    tabsParent.addEventListener('click', (event) => {
+        const target = event.target;
+
+        if (target && target.classList.contains('tabheader__item')) {
+            tabs.forEach((item, i) => {
+                if (target == item) {
+                    hideAllTabContent();
+                    showActiveTab(i);
+                }
+            });
+        }
+    });
+
 });
-
-// btns.forEach(btn => {
-//     btn.addEventListener('click', () => {
-//         console.log('Hello');
-//     });
-// });
-
-const btn = document.createElement('button');
-btn.classList.add('red');
-wrapper.append(btn);
