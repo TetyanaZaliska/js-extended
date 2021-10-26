@@ -41,3 +41,53 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
+const btn = document.querySelector('.header__right-block .btn'),
+      abtn = document.querySelector('.social .subtitle');
+let timerId,
+    i = 0;
+
+
+function myAnimation() {
+    const logo = document.querySelector('.header__logo');
+    let pos = -20;
+
+    const timerId = setInterval(frame, 10);
+
+    function frame() { 
+        if (pos === 20) {
+            clearInterval(timerId);
+        } else {
+            logo.style.marginTop = pos + 'px';
+            logo.style.marginLeft = pos + 'px';
+            pos++;
+            console.log(pos+'px');
+        }
+    }
+
+    
+}
+
+// timerId = setInterval(myAnimation, 10);
+// abtn.addEventListener('click', myAnimation);
+btn.addEventListener('click', myAnimation);
+
+// btn.addEventListener('click', () => {
+//     // timerId = setTimeout(logger, 2000);
+//     timerId = setInterval(logger, 10);
+// });
+
+// // const timerId = setTimeout(logger, 2000);
+
+// function logger() {
+//     if (i === 3) {
+//         clearInterval(timerId);
+//     }
+//     console.log('text'); 
+//     i++;
+// }
+
+// let id = setTimeout(function log() {
+//     console.log('setTimeout'+id);
+//     id = setTimeout(log, 500);
+// }, 500);
