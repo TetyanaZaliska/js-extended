@@ -96,16 +96,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setClock('.timer', deadline);
   
-    function showDeadline(endTime) {
-        endTime = new Date(Date.parse(endTime));
+    function showDeadline(deadline) {
+        deadline = new Date(Date.parse(deadline));
         const timerEnd = document.querySelector('#timerEnd'); 
   
-        timerEnd.innerHTML = endTime.getFullYear() + '-' + 
-                            getZero(endTime.getMonth() + 1) + '-' + 
-                            getZero(endTime.getDate()) + ' в ' + 
-                            getZero(endTime.getHours()) + ':' + 
-                            getZero(endTime.getMinutes()) + ':' + 
-                            getZero(endTime.getSeconds());
+        timerEnd.innerHTML = deadline.getFullYear() + '-' + 
+                            getZero(deadline.getMonth() + 1) + '-' + 
+                            getZero(deadline.getDate()) + ' в ' + 
+                            getZero(deadline.getHours()) + ':' + 
+                            getZero(deadline.getMinutes()) + ':' + 
+                            getZero(deadline.getSeconds());
     }
 
     showDeadline(deadline);
