@@ -2,6 +2,8 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Tabs
+
     const tabs = document.querySelectorAll('.tabheader__item'),
           tabContent = document.querySelectorAll('.tabcontent'),
           tabsParent = document.querySelector('.tabheader__items');
@@ -39,55 +41,74 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+ 
+    // Timer 
 
-});
+    const deadline = '2021-11-10 14:15';
 
-const btn = document.querySelector('.header__right-block .btn'),
-      abtn = document.querySelector('.social .subtitle');
-let timerId,
-    i = 0;
+    function getTimeRemaining(endtime) {
+        const t = Date.parse(endtime) - Date.parse(new Date()),
+              days = Math.floor(t / (1000 * 60 * 60 * 24)),
+              hours = Math.floor((t / (1000 * 60 * 60)) % 24),
+              minutes = Math.floor((t / (1000 * 60)) % 60),
+              seconds = Math.floor((t / 1000 ) % 60);
 
+        return {
+            'total': t,
+            days,
+            hours,
+            minutes,
+            seconds
+        };
+    }
 
-function myAnimation() {
-    const logo = document.querySelector('.header__logo');
-    let pos = -20;
-
-    const timerId = setInterval(frame, 10);
-
-    function frame() { 
-        if (pos === 20) {
-            clearInterval(timerId);
+    function getZero(num) {
+        if (num >= 0 && num < 10) {
+            return `0${num}`;
         } else {
-            logo.style.marginTop = pos + 'px';
-            logo.style.marginLeft = pos + 'px';
-            pos++;
-            console.log(pos+'px');
+            return num;
         }
     }
 
-    
-}
+    function setClock(selector, endtime) {
+        const timer = document.querySelector(selector),
+              days = timer.querySelector('#days'),
+              hours = timer.querySelector('#hours'),
+              minutes = timer.querySelector('#minutes'),
+              seconds = timer.querySelector('#seconds'),
+              timeInterval = setInterval(updateClock, 1000);
 
-// timerId = setInterval(myAnimation, 10);
-// abtn.addEventListener('click', myAnimation);
-btn.addEventListener('click', myAnimation);
+        updateClock();
+        
+        function updateClock() {
+            const t = getTimeRemaining(endtime);
 
-// btn.addEventListener('click', () => {
-//     // timerId = setTimeout(logger, 2000);
-//     timerId = setInterval(logger, 10);
-// });
+            days.innerHTML = getZero(t.days);
+            hours.innerHTML = getZero(t.hours);
+            minutes.innerHTML = getZero(t.minutes);
+            seconds.innerHTML = getZero(t.seconds);
 
-// // const timerId = setTimeout(logger, 2000);
+            if (t.total <= 0) {
+                clearInterval(timeInterval);
+            }
+        }
+    }
 
-// function logger() {
-//     if (i === 3) {
-//         clearInterval(timerId);
-//     }
-//     console.log('text'); 
-//     i++;
-// }
+    setClock('.timer', deadline);
+  
+    function showDeadline(endTime) {
+        endTime = new Date(Date.parse(endTime));
+        const timerEnd = document.querySelector('#timerEnd'); 
+  
+        timerEnd.innerHTML = endTime.getFullYear() + '-' + 
+                            getZero(endTime.getMonth() + 1) + '-' + 
+                            getZero(endTime.getDate()) + ' в ' + 
+                            getZero(endTime.getHours()) + ':' + 
+                            getZero(endTime.getMinutes()) + ':' + 
+                            getZero(endTime.getSeconds());
+    }
 
-// let id = setTimeout(function log() {
-//     console.log('setTimeout'+id);
-//     id = setTimeout(log, 500);
-// }, 500);
+    showDeadline(deadline);
+
+});
+
