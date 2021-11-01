@@ -272,6 +272,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
     forms.forEach(item => postFrom(item));
 
+    // функция с использованием XMLHttpRequest
+    // function postFrom(form){
+    //     form.addEventListener('submit', (e) => {
+    //         e.preventDefault();
+
+    //         // const statusMessage = document.createElement('div');
+    //         // statusMessage.classList.add('status');
+    //         // statusMessage.textContent = message.loading;
+    //         // form.append(statusMessage);
+    //         const statusMessage = document.createElement('img');
+    //         statusMessage.src = message.loading;
+    //         // statusMessage.style.cssText = `
+    //         //     display: block;
+    //         //     margin: 0 auto;
+    //         // `;
+    //         statusMessage.classList.add('img_spinner');
+    //         // form.append(statusMessage);
+    //         form.insertAdjacentElement('afterend', statusMessage);
+
+    //         const request = new XMLHttpRequest(); 
+    //         request.open('POST', 'server.php');
+
+    //         const formData = new FormData(form);
+            
+    //         const object = {};
+    //         // formData.forEach((value, key) => object[key] = value);
+    //         formData.forEach(function(value, key) {
+    //             object[key] = value;
+    //         });
+            
+    //         const json = JSON.stringify(object);
+
+    //         // для форм-даты заголовок не нужен
+    //         // // request.setRequestHeader('Content-type', 'multipart/form-data; charset=utf-8');
+    //         // request.send(formData); 
+            
+    //         // для json даты заголовок нужен
+    //         request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    //         request.send(json); 
+
+    //         request.addEventListener('load', () => {
+    //             if (request.status === 200) {
+    //                 console.log(request.response);
+    //                 showThanksModal(message.success);
+    //                 form.reset(); 
+    //                 statusMessage.remove();
+    //             } else {
+    //                 showThanksModal(message.failure);
+    //             }
+    //         });
+
+    //     });
+    // }
+    
+    
+    // функция с использованием fetch
     function postFrom(form){
         form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -289,10 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
             statusMessage.classList.add('img_spinner');
             // form.append(statusMessage);
             form.insertAdjacentElement('afterend', statusMessage);
-
-            const request = new XMLHttpRequest(); 
-            request.open('POST', 'server.php');
-
+ 
             const formData = new FormData(form);
             
             const object = {};
@@ -302,25 +355,24 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             
             const json = JSON.stringify(object);
-
-            // для форм-даты заголовок не нужен
-            // // request.setRequestHeader('Content-type', 'multipart/form-data; charset=utf-8');
-            // request.send(formData); 
             
-            // для json даты заголовок нужен
-            request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-            request.send(json); 
-
-            request.addEventListener('load', () => {
-                if (request.status === 200) {
-                    console.log(request.response);
-                    showThanksModal(message.success);
-                    form.reset(); 
-                    statusMessage.remove();
-                } else {
-                    showThanksModal(message.failure);
-                }
-            });
+            fetch('server.php', {
+                method: "POST",
+                //заголовки только для json-обьектов, для формы не надо
+                headers: {
+                    'Content-type': 'application/json; charset=utf-8'
+                },
+                // body: formData
+                body: JSON.stringify(object)
+            })
+            // .then(data => data.text())
+            .then(data => {
+                console.log(data);
+                showThanksModal(message.success); 
+                statusMessage.remove();
+            })
+            .catch(() => showThanksModal(message.failure))
+            .finally(() => form.reset());  
 
         });
     }
@@ -350,6 +402,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4000);
 
     }
+
+    // Пример как работает fetch - сайт где можно быстро протестить
+    // fetch('https://jsonplaceholder.typicode.com/posts', {
+    //     method: "POST",
+    //     headers: {
+    //         'Content-type': 'application/json'
+    //     },
+    //     body: JSON.stringify({name: 'Alex'})
+    // })
+    // .then(response => response.json())
+    // .then(json => console.log(json));
 
 });
 
