@@ -263,6 +263,9 @@ document.addEventListener('DOMContentLoaded', () => {
         'menu__item'
     ).render();
 
+    // Forms
+
+    
 
 });
 
