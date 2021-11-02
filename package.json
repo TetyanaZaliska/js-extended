@@ -18,5 +18,8 @@
   "homepage": "https://github.com/TetyanaZaliska/js-extended#readme",
   "devDependencies": {
     "json-server": "^0.17.0"
+  },
+  "dependencies": {
+    "axios": "^0.24.0"
   }
 }
