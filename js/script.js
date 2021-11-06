@@ -393,6 +393,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    // Slider
+
+    const slider = document.querySelector('.offer__slider');
+
+    function getSZero(num) {
+        if (num >= 0 && num < 10) {
+            return `0${num}`;
+        } else {
+            return num;
+        }
+    }
+
+    showSimpleSlider(slider);
+
+    function showSimpleSlider(slider) { 
+        const allSliders = slider.querySelectorAll('.offer__slide'),
+              current = slider.querySelector('#current'),
+              total = slider.querySelector('#total');
+        
+        let slideIndex = 1;
+
+ 
+        const showSlide = (num) => {
+            current.innerHTML = getSZero(num);
+            total.innerHTML = getSZero(allSliders.length);
+
+            // allSliders.forEach(item => item.style.display = 'none');
+            // allSliders[num-1].style.display = 'block';
+
+            allSliders.forEach(item => {
+                item.classList.add('hide');
+                item.classList.remove('show');
+            }); 
+            allSliders[num-1].classList.add('show');
+            allSliders[num-1].classList.remove('hide');
+        };
+
+        showSlide(slideIndex);
+
+        function plusSlides(n) {
+            slideIndex += n;
+            if (slideIndex > allSliders.length) {
+                slideIndex = 1;
+            }
+            if (slideIndex < 1) {
+                slideIndex = allSliders.length;
+            }
+            showSlide(slideIndex);
+        } 
+ 
+        slider.querySelector('.offer__slider-prev').addEventListener('click', (e) => { 
+            plusSlides(-1);
+        });
+
+        slider.querySelector('.offer__slider-next').addEventListener('click', (e) => { 
+            plusSlides(1);
+        });
+ 
+    }
+
     // Пример как работает fetch - сайт где можно быстро протестить
     // fetch('https://jsonplaceholder.typicode.com/posts', {
     //     method: "POST",
