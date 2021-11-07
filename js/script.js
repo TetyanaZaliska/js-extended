@@ -428,11 +428,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
         allSliders.forEach(slide => slide.style.width = width);
 
+        slider.style.position = 'relative';
+        const indicators = document.createElement('ol'),
+              dots = [];
+        indicators.classList.add('carousel-indicators');
+        slider.append(indicators);
+
+        for (let i = 0; i < allSliders.length; i++) {
+            const dot = document.createElement('li');
+            dot.setAttribute('data-slide-to', i + 1);
+            dot.classList.add('dot');
+            if (i == 0) {
+                dot.style.opacity = 1;
+            }
+            indicators.append(dot);
+            dots.push(dot);
+        } 
+        
+        
+
         slidesField.style.transform = `translateX(-${offset}px)`;
 
         const showBSlide = (num) => {
             current.innerHTML = getSZero(num);
             total.innerHTML = getSZero(allSliders.length);  
+
+            slidesField.style.transform = `translateX(-${offset}px)`;
+
+            dots.forEach(dot => dot.style.opacity = '.5');
+            dots[num - 1].style.opacity = '1';
         };
 
         showBSlide(slideIndex);
@@ -449,17 +473,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 slideIndex = allSliders.length;  
                 offset = +width.slice(0, width.length - 2) * (allSliders.length - 1);
             }
-            showBSlide(slideIndex);
+            showBSlide(slideIndex);  
+            
         } 
  
         slider.querySelector('.offer__slider-prev').addEventListener('click', (e) => { 
-            plusSlides(-1); 
-            slidesField.style.transform = `translateX(-${offset}px)`;
+            plusSlides(-1);  
         });
 
         slider.querySelector('.offer__slider-next').addEventListener('click', (e) => { 
             plusSlides(1); 
-            slidesField.style.transform = `translateX(-${offset}px)`;
+        });
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                const slideTo = e.target.getAttribute('data-slide-to');
+
+                slideIndex = slideTo;
+                offset = +width.slice(0, width.length - 2) * (slideIndex - 1);
+                showBSlide(slideIndex);  
+            });
         });
     }
 
