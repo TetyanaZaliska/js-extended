@@ -405,7 +405,63 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    showSimpleSlider(slider);
+    // showSimpleSlider(slider);
+    showBeutifulSlider(slider);
+
+    function showBeutifulSlider(slider) {
+        const allSliders = slider.querySelectorAll('.offer__slide'),
+              current = slider.querySelector('#current'),
+              total = slider.querySelector('#total'),
+              slidesWrapper = slider.querySelector('.offer__slider-wrapper'),
+              slidesField = slider.querySelector('.offer__slider-inner'),
+              width = window.getComputedStyle(slidesWrapper).width;
+        
+        let slideIndex = 1;
+        let offset = 0;
+
+        slidesField.style.width = 100 * allSliders.length + '%';
+        slidesField.style.transition = '0.5s all';
+        slidesField.style.display = 'flex';
+
+        slidesWrapper.style.overflow = 'hidden';
+
+
+        allSliders.forEach(slide => slide.style.width = width);
+
+        slidesField.style.transform = `translateX(-${offset}px)`;
+
+        const showBSlide = (num) => {
+            current.innerHTML = getSZero(num);
+            total.innerHTML = getSZero(allSliders.length);  
+        };
+
+        showBSlide(slideIndex);
+
+        function plusSlides(n) {
+            slideIndex += n;
+            offset = offset + n*width.slice(0, width.length - 2);
+
+            if (slideIndex > allSliders.length) {
+                slideIndex = 1;  
+                offset = 0;
+            }
+            if (slideIndex < 1) {
+                slideIndex = allSliders.length;  
+                offset = +width.slice(0, width.length - 2) * (allSliders.length - 1);
+            }
+            showBSlide(slideIndex);
+        } 
+ 
+        slider.querySelector('.offer__slider-prev').addEventListener('click', (e) => { 
+            plusSlides(-1); 
+            slidesField.style.transform = `translateX(-${offset}px)`;
+        });
+
+        slider.querySelector('.offer__slider-next').addEventListener('click', (e) => { 
+            plusSlides(1); 
+            slidesField.style.transform = `translateX(-${offset}px)`;
+        });
+    }
 
     function showSimpleSlider(slider) { 
         const allSliders = slider.querySelectorAll('.offer__slide'),
