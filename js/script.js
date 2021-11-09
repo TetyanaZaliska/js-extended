@@ -463,7 +463,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function plusSlides(n) {
             slideIndex += n;
-            offset = offset + n*width.slice(0, width.length - 2);
+            offset = offset + n*width.replace(/\D/g, "");
 
             if (slideIndex > allSliders.length) {
                 slideIndex = 1;  
@@ -471,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (slideIndex < 1) {
                 slideIndex = allSliders.length;  
-                offset = +width.slice(0, width.length - 2) * (allSliders.length - 1);
+                offset = +width.replace(/\D/g, "") * (allSliders.length - 1);
             }
             showBSlide(slideIndex);  
             
@@ -490,7 +490,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const slideTo = e.target.getAttribute('data-slide-to');
 
                 slideIndex = slideTo;
-                offset = +width.slice(0, width.length - 2) * (slideIndex - 1);
+                offset = +width.replace(/\D/g, "") * (slideIndex - 1);
                 showBSlide(slideIndex);  
             });
         });
