@@ -75,5 +75,5 @@ alex.age = 80;
 alex.age = 500;
 console.log(alex.age);
 alex.say();
-console.log(alex.#surname);
+// console.log(alex.#surname);
 console.log(alex.surname);
