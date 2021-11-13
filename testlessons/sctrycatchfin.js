@@ -14,3 +14,11 @@ try {
 }
 
 console.log('go to other script instruction');
+
+try {
+    document.querySelector('.active').addEventListener('click', () => {
+        console.log('clicked');
+    });
+} catch(e) {}
+
+console.log('go to other script instruction');
