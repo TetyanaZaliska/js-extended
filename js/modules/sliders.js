@@ -1,7 +1,7 @@
-function sliders() {
+function sliders({container, slide, nextArrow, prevArrow, totalCounter, currentCounter, wrapper, field}) {
     // Slider
 
-    const slider = document.querySelector('.offer__slider');
+    const slider = document.querySelector(container);
 
     function getSZero(num) {
         if (num >= 0 && num < 10) {
@@ -15,24 +15,24 @@ function sliders() {
     showBeutifulSlider(slider);
 
     function showBeutifulSlider(slider) {
-        const allSliders = slider.querySelectorAll('.offer__slide'),
-              current = slider.querySelector('#current'),
-              total = slider.querySelector('#total'),
-              slidesWrapper = slider.querySelector('.offer__slider-wrapper'),
-              slidesField = slider.querySelector('.offer__slider-inner'),
+        const slides = slider.querySelectorAll(slide),
+              current = slider.querySelector(currentCounter),
+              total = slider.querySelector(totalCounter),
+              slidesWrapper = slider.querySelector(wrapper),
+              slidesField = slider.querySelector(field),
               width = window.getComputedStyle(slidesWrapper).width;
         
         let slideIndex = 1;
         let offset = 0;
 
-        slidesField.style.width = 100 * allSliders.length + '%';
+        slidesField.style.width = 100 * slides.length + '%';
         slidesField.style.transition = '0.5s all';
         slidesField.style.display = 'flex';
 
         slidesWrapper.style.overflow = 'hidden';
 
 
-        allSliders.forEach(slide => slide.style.width = width);
+        slides.forEach(slide => slide.style.width = width);
 
         slider.style.position = 'relative';
         const indicators = document.createElement('ol'),
@@ -40,7 +40,7 @@ function sliders() {
         indicators.classList.add('carousel-indicators');
         slider.append(indicators);
 
-        for (let i = 0; i < allSliders.length; i++) {
+        for (let i = 0; i < slides.length; i++) {
             const dot = document.createElement('li');
             dot.setAttribute('data-slide-to', i + 1);
             dot.classList.add('dot');
@@ -57,7 +57,7 @@ function sliders() {
 
         const showBSlide = (num) => {
             current.innerHTML = getSZero(num);
-            total.innerHTML = getSZero(allSliders.length);  
+            total.innerHTML = getSZero(slides.length);  
 
             slidesField.style.transform = `translateX(-${offset}px)`;
 
@@ -75,23 +75,23 @@ function sliders() {
             slideIndex += n;
             offset = offset + n*deleteNotDigits(width);
 
-            if (slideIndex > allSliders.length) {
+            if (slideIndex > slides.length) {
                 slideIndex = 1;  
                 offset = 0;
             }
             if (slideIndex < 1) {
-                slideIndex = allSliders.length;  
-                offset = deleteNotDigits(width) * (allSliders.length - 1);
+                slideIndex = slides.length;  
+                offset = deleteNotDigits(width) * (slides.length - 1);
             }
             showBSlide(slideIndex);  
             
         } 
  
-        slider.querySelector('.offer__slider-prev').addEventListener('click', (e) => { 
+        slider.querySelector(prevArrow).addEventListener('click', (e) => { 
             plusSlides(-1);  
         });
 
-        slider.querySelector('.offer__slider-next').addEventListener('click', (e) => { 
+        slider.querySelector(nextArrow).addEventListener('click', (e) => { 
             plusSlides(1); 
         });
 
@@ -107,46 +107,46 @@ function sliders() {
     }
 
     function showSimpleSlider(slider) { 
-        const allSliders = slider.querySelectorAll('.offer__slide'),
-              current = slider.querySelector('#current'),
-              total = slider.querySelector('#total');
+        const slides = slider.querySelectorAll(slide),
+              current = slider.querySelector(currentCounter),
+              total = slider.querySelector(totalCounter);
         
         let slideIndex = 1;
 
  
         const showSlide = (num) => {
             current.innerHTML = getSZero(num);
-            total.innerHTML = getSZero(allSliders.length);
+            total.innerHTML = getSZero(slides.length);
 
-            // allSliders.forEach(item => item.style.display = 'none');
-            // allSliders[num-1].style.display = 'block';
+            // slides.forEach(item => item.style.display = 'none');
+            // slides[num-1].style.display = 'block';
 
-            allSliders.forEach(item => {
+            slides.forEach(item => {
                 item.classList.add('hide');
                 item.classList.remove('show');
             }); 
-            allSliders[num-1].classList.add('show');
-            allSliders[num-1].classList.remove('hide');
+            slides[num-1].classList.add('show');
+            slides[num-1].classList.remove('hide');
         };
 
         showSlide(slideIndex);
 
         function plusSlides(n) {
             slideIndex += n;
-            if (slideIndex > allSliders.length) {
+            if (slideIndex > slides.length) {
                 slideIndex = 1;
             }
             if (slideIndex < 1) {
-                slideIndex = allSliders.length;
+                slideIndex = slides.length;
             }
             showSlide(slideIndex);
         } 
  
-        slider.querySelector('.offer__slider-prev').addEventListener('click', (e) => { 
+        slider.querySelector(prevArrow).addEventListener('click', (e) => { 
             plusSlides(-1);
         });
 
-        slider.querySelector('.offer__slider-next').addEventListener('click', (e) => { 
+        slider.querySelector(nextArrow).addEventListener('click', (e) => { 
             plusSlides(1);
         });
  
@@ -170,4 +170,5 @@ function sliders() {
 }
 
 
-module.exports = sliders;
+// module.exports = sliders;
+export default sliders;

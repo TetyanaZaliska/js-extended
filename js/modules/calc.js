@@ -1,3 +1,5 @@
+//если понадобится в будущем можно переписать под модуль для повторного использования
+
 function calc() {
     // Calculator
 
@@ -102,4 +104,5 @@ function calc() {
     getDynamicInformation('#age');
 }
 
-module.exports = calc;
+// module.exports = calc;
+export default calc;
