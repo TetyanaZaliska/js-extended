@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Start of js global practice part 2 - extended",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TetyanaZaliska/js-extended.git"
@@ -21,8 +18,8 @@
     "webpack": "^5.64.0",
     "webpack-cli": "^4.9.1"
   },
+  "keywords": [],
   "dependencies": {
-    "axios": "^0.24.0"
-  },
-  "keywords": []
+    "es6-promise": "^4.2.8"
+  }
 }

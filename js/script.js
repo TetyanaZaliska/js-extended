@@ -1,3 +1,4 @@
+require('es6-promise').polyfill();
 
 import tabs from './modules/tabs';
 import timer from './modules/timer';
